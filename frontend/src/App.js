@@ -1,10 +1,10 @@
-import './App.css';
+import styles from  './App.module.css';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 import {Home} from './pages/Home/Home';
 import Navigation from './components/shared/Navigation/Navigation';
 import Authenticate from './pages/Authenticate/Authenticate'
 import Active from './pages/Active/Active';
-import Room from './pages/Rooms/Rooms';
+import Rooms from './pages/Rooms/Rooms';
 import {useSelector}  from 'react-redux';
 import {userLoadingWithRefresh} from './hooks/userLoadingWithRefresh';
 import { Loader } from "./components/shared/Loader/Loader";

@@ -1,14 +1,13 @@
-import styles from  './App.module.css';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import {Home} from './pages/Home/Home';
+import Home from './pages/Home/Home';
 import Navigation from './components/shared/Navigation/Navigation';
 import Authenticate from './pages/Authenticate/Authenticate'
-import Active from './pages/Active/Active';
+import './App.css';
 import Rooms from './pages/Rooms/Rooms';
 import {useSelector}  from 'react-redux';
-import {userLoadingWithRefresh} from './hooks/userLoadingWithRefresh';
-import { Loader } from "./components/shared/Loader/Loader";
-
+import userLoadingWithRefresh from './hooks/useLoadingWithRefresh';
+import Loader  from "./components/shared/Loader/Loader";
+import Active from "./pages/Steps/StepPhoneEmail/StepPhoneEmail"
 function App() {
   const {loading} = userLoadingWithRefresh();
   return loading ? (
@@ -26,9 +25,9 @@ function App() {
         <SemiProtectedRoute>
           <Active/>
         </SemiProtectedRoute>
-        <Protected path="/rooms">
+        <ProtectedRoute path="/rooms">
           <Rooms/>
-        </Protected>
+        </ProtectedRoute>
       </Switch>
     </BrowserRouter>
   )
@@ -43,7 +42,7 @@ const GuestRoute = ({children, ...rest}) => {
       render = {({location}) => {
         return isAuth ? (
           <Redirect to = {{
-            pathname =  "/rooms",
+            pathname :  "/rooms",
             state : {from : location},
           }}
           />
@@ -56,7 +55,7 @@ const GuestRoute = ({children, ...rest}) => {
 }
 
 
-const SemiProtected = ({children, ...rest}) => {
+const SemiProtectedRoute= ( {children, ...rest}) => {
   const {user, isAuth} = useSelector(state => state.auth);
   return (
     <Route
@@ -64,7 +63,7 @@ const SemiProtected = ({children, ...rest}) => {
       render={({location}) => {
         return !isAuth ? (
           <Redirect to = {{
-            pathname =  "/",
+            pathname :  "/",
             state : {from : location},
           }}
           />
@@ -72,7 +71,7 @@ const SemiProtected = ({children, ...rest}) => {
           children
         ):(
           <Redirect to = {{
-            pathname =  "/rooms",
+            pathname :  "/rooms",
             state : {from : location},
           }}
           />

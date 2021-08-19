@@ -76,4 +76,69 @@ class AuthController{
         const userDto = new UserDto(user);
         res.json({user: userDto, auth:true});
     }
+
+    async refresh(req,res){
+        const {refreshToken:refreshTokenFromCookie} = req.cookies;
+        let userData;
+        try{
+            userData = await tokenService.verifyRefreshToken(
+                refreshTokenFromCookie
+            );
+        }catch(err){
+            return res.status(401).json({message:'Invalid Token'});
+        }
+
+        try{
+            const token = await tokenService.findRefreshToken(
+                userData._id,
+                refreshTokenFromCookie
+            );
+
+            if(!token){
+                return res.status(401).json({message: "Invalid token"});
+            }
+        }catch(err){
+            return res.status(500).json({message: 'Internal error'});
+        }
+
+        const user = await userService.findUser({_id: userData._id});
+        if(!user){
+            return res.status(404).json({message:'No user'});
+        }
+
+        const {refreshToken, accessToken} = tokenService.generateTokens({
+            _id: userData._id,
+        })
+
+        try{
+            await tokenService.updateRefreshToken(userData._id, refreshToken);
+        }catch(err){
+            return res.status(500).json({message: "Internal error"});
+        }
+
+        res.cookie('refreshToken', refreshToken, {
+            maxAge: 1000 * 60 * 60 * 24 * 30,
+            httpOnly: true,
+        });
+
+        res.cookie('accessToken', accessToken, {
+            maxAge: 1000 * 60 * 60 * 24 * 30,
+            httpOnly: true,
+        });
+
+        const userDto = new UserDto(user);
+        res.json({user:userDto, auth:true});
+    }
+
+    async logout(req,res){
+        const {refreshToken} = req.cookies;
+        await tokenService.removeToken(refreshToken);
+
+        res.clearCookie('refreshToken');
+        res.clearCookie('accessToken');
+        res.json({user:null,auth: false});
+    }
 }
+
+
+module.exports = new AuthController();

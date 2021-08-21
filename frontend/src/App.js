@@ -22,7 +22,7 @@ function App() {
         <GuestRoute path="/authenticate">
           <Authenticate/>
         </GuestRoute>
-        <SemiProtectedRoute>
+        <SemiProtectedRoute path="/activate">
           <Active/>
         </SemiProtectedRoute>
         <ProtectedRoute path="/rooms">

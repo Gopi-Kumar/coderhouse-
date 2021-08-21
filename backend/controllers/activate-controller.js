@@ -3,7 +3,7 @@ const path = require("path");
 const userService = require("../services/user-service");
 const UserDto = require("../dtos/user-dto");
 
-class ActiveController{
+class ActivateController{
 	async activate(req,res){
 		const {name, avatar} = req.body;
 		if(!name || !avatar){

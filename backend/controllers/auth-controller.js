@@ -13,9 +13,9 @@ class AuthController{
         }
         const otp = await otpService.generateOtp();
         const ttl = 100 * 60 * 2;
-        const expres = Date.now() + ttl;
+        const expires = Date.now() + ttl;
         const data = `${phone}.${otp}.${expires}`;
-        const hash = hashService.hashOtp();
+        const hash = hashService.hashOtp(data);
 
         try{
             res.json({
@@ -35,7 +35,7 @@ class AuthController{
             res.status(400).json("All fields are required");
         }
         const [hashedOtp, expires] = hash.split('.');
-        if(Data.now() > +expires){
+        if(Date.now() > +expires){
             res.status(400).json({message: 'OTP expired'});
         }
         const data = `${phone}.${otp}.${expires}`;
@@ -49,8 +49,6 @@ class AuthController{
             user = await userService.findUser({phone});
             if(!user){
                 user = await userService.createUser({phone});
-            }else{
-                res.status(400).json({message:'Number all ready registered'});
             }
         }catch(err){
             console.log(err);

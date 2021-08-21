@@ -11,7 +11,7 @@ export default function useLoadingWithRefresh(){
         (async ()=> {
             try{
                 const {data} = await axios.get(
-                    `${process.env.REACT_APP_API_URL}/api/refresh`,
+                    `http://localhost:5000/api/refresh`,
                     {
                             withCredentials: true,
                     }

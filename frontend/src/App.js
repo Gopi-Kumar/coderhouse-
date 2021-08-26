@@ -7,7 +7,7 @@ import Rooms from './pages/Rooms/Rooms';
 import {useSelector}  from 'react-redux';
 import userLoadingWithRefresh from './hooks/useLoadingWithRefresh';
 import Loader  from "./components/shared/Loader/Loader";
-import Active from "./pages/Steps/StepPhoneEmail/StepPhoneEmail"
+import Activate from "./pages/Activate/Activate"
 function App() {
   const {loading} = userLoadingWithRefresh();
   return loading ? (
@@ -23,11 +23,12 @@ function App() {
           <Authenticate/>
         </GuestRoute>
         <SemiProtectedRoute path="/activate">
-          <Active/>
+          <Activate/>
         </SemiProtectedRoute>
         <ProtectedRoute path="/rooms">
           <Rooms/>
         </ProtectedRoute>
+         
       </Switch>
     </BrowserRouter>
   )
@@ -42,7 +43,7 @@ const GuestRoute = ({children, ...rest}) => {
       render = {({location}) => {
         return isAuth ? (
           <Redirect to = {{
-            pathname :  "/rooms",
+            pathname :  "/activate",
             state : {from : location},
           }}
           />

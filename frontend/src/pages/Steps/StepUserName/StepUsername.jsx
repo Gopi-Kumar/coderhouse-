@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StepUsername = ({ onNext }) => {
+const StepUserName = ({ onNext }) => {
     return (
         <>
             <div>username component</div>
@@ -9,4 +9,4 @@ const StepUsername = ({ onNext }) => {
     );
 };
 
-export default StepUsername;
+export default StepUserName;

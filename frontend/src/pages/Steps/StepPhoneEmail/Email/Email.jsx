@@ -4,13 +4,13 @@ import Button from '../../../../components/shared/Button/Button';
 import TextInput from '../../../../components/shared/TextInput/TextInput';
 import styles from '../StepPhoneEmail.module.css';
 
-export default function Email({onNext}) {
-    const [email, setEmail] = useState("");
+const Email = ({ onNext }) => {
+    const [email, setEmail] = useState('');
     return (
         <Card title="Enter your email id" icon="email-emoji">
             <TextInput
                 value={email}
-                onChange = {(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
             />
             <div>
                 <div className={styles.actionButtonWrap}>
@@ -22,6 +22,7 @@ export default function Email({onNext}) {
                 </p>
             </div>
         </Card>
-    )
-}
+    );
+};
 
+export default Email;

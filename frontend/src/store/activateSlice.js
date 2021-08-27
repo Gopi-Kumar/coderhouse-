@@ -1,23 +1,23 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState  = {
-    name : '',
-    avatar : '',
+const initialState = {
+    name: '',
+    avatar: '',
 };
 
 export const activateSlice = createSlice({
-    name : 'activate',
+    name: 'activate',
     initialState,
-    reducers : {
-        setName:(state, action) => {
+    reducers: {
+        setName: (state, action) => {
             state.name = action.payload;
         },
-        setAvatar: (state,action)=>{
-            state.avatar =  action.payload;
+        setAvatar: (state, action) => {
+            state.avatar = action.payload;
         },
+    },
+});
 
-    }
-})
+export const { setName, setAvatar } = activateSlice.actions;
 
-export const {setName, setAvatar} = activateSlice.actions;
 export default activateSlice.reducer;

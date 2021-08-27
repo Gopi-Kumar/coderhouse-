@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { setAuth } from '../../../store/authSlice';
 import { useDispatch } from 'react-redux';
 
-
 const StepOtp = () => {
     const [otp, setOtp] = useState('');
     const dispatch = useDispatch();
@@ -17,7 +16,6 @@ const StepOtp = () => {
         if (!otp || !phone || !hash) return;
         try {
             const { data } = await verifyOtp({ otp, phone, hash });
-            console.log(data);
             dispatch(setAuth(data));
         } catch (err) {
             console.log(err);
